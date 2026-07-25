@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    // Целевая версия JavaScript — ES2025 (Node.js 22+)
+    "target": "es2025",
+    // Система модулей Node.js (ESM + CJS hybrid)
+    "module": "node16",
+    // Алгоритм разрешения модулей — совпадает с module
+    "moduleResolution": "node16",
+    // Встроенные типы (DOM не нужен на бэкенде)
+    "lib": ["ES2025"],
+    // Только типы Node.js (fs, path, process и т.д.)
+    "types": ["node"],
+    // Корневая папка исходников — относительно неё строится outDir
+    "rootDir": "./",
+    // Куда компилировать .js файлы
+    "outDir": "./dist",
+    // Строгая типизация: strictNullChecks, noImplicitAny и т.д.
+    "strict": true,
+    // Импорт default-экспорта из CommonJS модулей (import x from 'y')
+    "esModuleInterop": true,
+    // Позволяет импортировать .json файлы (import config from './config.json')
+    "resolveJsonModule": true,
+    // Каждый файл — изолированный модуль (ограничение tsx/esbuild)
+    "isolatedModules": true,
+    // Генерировать source maps для отладки в Chrome DevTools / VS Code
+    "sourceMap": true,
+    // Пропускать проверку типов в node_modules (ускоряет компиляцию)
+    "skipLibCheck": true,
+    // Запретить импорт с неправильным регистром (Myfile.ts vs myfile.ts)
+    "forceConsistentCasingInFileNames": true,
+    // Оператор [] возвращает T | undefined (stricter типизация)
+    "noUncheckedIndexedAccess": true
+  },
+  // Компилируем только исходники
+  "include": ["src/**/*.ts", "config/**/*.ts"],
+  // Исключаем сгенерированные файлы и зависимости
+  "exclude": ["node_modules", "dist"]
+}
