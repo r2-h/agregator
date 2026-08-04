@@ -1,26 +1,39 @@
-import { postEventsMutation } from "@/shared/api/@tanstack/react-query.gen";
-import { useMutation } from "@tanstack/react-query";
+import {
+  getEventsQueryKey,
+  getMeQueryKey,
+  postEventsMutation
+} from "@/shared/api/@tanstack/react-query.gen";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "@tanstack/react-router";
 import { type SubmitEvent } from "react";
 import { EventForm } from "../components/event-form/event-form";
-import { useRouter } from "@tanstack/react-router";
 
 export function CreateEventPage() {
   const router = useRouter();
   const mutation = useMutation(postEventsMutation({ credentials: "include" }));
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
 
-    const title = String(formData.get("title") ?? "").trim();
-    const description = String(formData.get("description") ?? "").trim();
-    const address = String(formData.get("address") ?? "").trim();
-    const startsAt = formData.get("startedAt");
-    const capacity = Number(formData.get("capacity"));
+    const body = {
+      title: String(formData.get("title") ?? "").trim(),
+      description: String(formData.get("description") ?? "").trim(),
+      address: String(formData.get("address") ?? "").trim(),
+      startsAt: formData.get("startedAt"),
+      capacity: Number(formData.get("capacity")),
+    };
 
     mutation.mutate(
-      { body: { title, description, capacity, address, startsAt } },
-      { onSuccess: (data) => router.navigate({ to: "/events/$id", params: { id: data.id } }) },
+      { body },
+      {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries({ queryKey: getEventsQueryKey() });
+          queryClient.invalidateQueries({ queryKey: getMeQueryKey() });
+          router.navigate({ to: "/events/$id", params: { id: data.id } });
+        },
+      },
     );
   };
 
