@@ -2,7 +2,6 @@ import { FastifyPluginAsyncZod } from "@fastify/type-provider-zod";
 import argon2 from "argon2";
 import { eq } from "drizzle-orm";
 import { FastifyReply } from "fastify";
-import { env } from "../../config/env";
 import { db } from "../../db";
 import { users } from "../../db/schema";
 import { errorResponses, voidResponseSchema } from "../../utils/zod";
@@ -12,7 +11,8 @@ import { refreshExpires } from "../../plugins/jwt";
 function setRefreshTokenCookie(reply: FastifyReply, token: string) {
   reply.setCookie("refreshToken", token, {
     httpOnly: true,
-    secure: env.NODE_ENV === "production",
+    //  secure: env.NODE_ENV === "production",
+    secure: false,
     sameSite: "lax",
     maxAge: refreshExpires * 24 * 60 * 60,
   });
@@ -32,7 +32,8 @@ export const authRoutes: FastifyPluginAsyncZod = async (app) => {
       const { email, name, password } = request.body;
 
       const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
-      if (existingUser) return reply.code(409).send({ message: "Пользователь с таким email уже есть" });
+      if (existingUser)
+        return reply.code(409).send({ message: "Пользователь с таким email уже есть" });
 
       const passwordHash = await argon2.hash(password);
 
@@ -121,7 +122,10 @@ export const authRoutes: FastifyPluginAsyncZod = async (app) => {
 
         setRefreshTokenCookie(reply, refreshToken);
 
-        return reply.send({ accessToken, user: { email: user.email, id: user.id, name: user.name } });
+        return reply.send({
+          accessToken,
+          user: { email: user.email, id: user.id, name: user.name },
+        });
       } catch {
         return reply.code(401).send({ message: "Невалидный refresh токен" });
       }
