@@ -6,6 +6,7 @@ import { authRefresh, clientInterceptors } from "./bootstrap";
 import "./index.css";
 import { router } from "./router";
 import { TooltipProvider } from "@/shared/ui/tooltip";
+import { Toaster } from "@/shared/ui/toast";
 
 const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 3 * 60 * 1000 } } });
 
@@ -18,6 +19,7 @@ async function init() {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <RouterProvider router={router} />
+          <Toaster />
         </TooltipProvider>
       </QueryClientProvider>
     </StrictMode>,

@@ -1,12 +1,18 @@
 import argon2 from "argon2";
 import { drizzle } from "drizzle-orm/node-postgres/driver";
 import { env } from "../src/config/env";
-import { eventParticipants, events, relations, users } from "../src/db/schema";
+import { eventParticipants, events, users } from "../src/db/schema";
 
-const db = drizzle(env.DATABASE_URL, { relations });
+const db = drizzle(env.DATABASE_URL);
 
 async function seed() {
   console.log("Seeding database...");
+
+  // Очистка таблиц (порядок важен из-за FK)
+  await db.delete(eventParticipants);
+  await db.delete(events);
+  await db.delete(users);
+  console.log("Tables cleared");
 
   const insertedUsers = await db
     .insert(users)
@@ -22,13 +28,9 @@ async function seed() {
         name: "user2",
       },
     ])
-    .onConflictDoNothing()
     .returning();
 
-  const [user1, user2] = await Promise.all([
-    db.query.users.findFirst({ where: { email: "user1@mail.com" } }),
-    db.query.users.findFirst({ where: { email: "user2@mail.com" } }),
-  ]);
+  const [user1, user2] = insertedUsers;
 
   if (!user1 || !user2) {
     console.error("Failed to find or create users");
@@ -84,10 +86,7 @@ async function seed() {
   if (insertedEvents.length > 0) {
     const [reactMeetup] = insertedEvents;
 
-    await db.insert(eventParticipants).values([
-      { eventId: reactMeetup.id, userId: user2.id },
-      { eventId: reactMeetup.id, userId: user1.id },
-    ]);
+    await db.insert(eventParticipants).values([{ eventId: reactMeetup.id, userId: user2.id }]);
   }
 
   console.log(`Created ${insertedUsers.length} users`);

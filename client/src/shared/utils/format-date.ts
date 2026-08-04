@@ -1,4 +1,6 @@
-export function formatDate(ISOstring: string, type: "short" | "long" = "short") {
+export function formatDate(ISOstring: string | null, type: "short" | "long" = "short") {
+  if (!ISOstring) return "";
+
   switch (type) {
     case "short":
       return new Date(ISOstring).toLocaleString("ru-RU", {

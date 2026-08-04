@@ -5,9 +5,12 @@ import swaggerUi from "@fastify/swagger-ui";
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from "@fastify/type-provider-zod";
 import fastify from "fastify";
 import { env } from "./config/env";
+import { socketPlugin } from "./lib/socket";
 import { authRoutes } from "./modules/auth/auth.routes";
 import { eventsRoutes } from "./modules/events/events.routes";
 import { meRoutes } from "./modules/me/me.routes";
+import { messagesRoutes } from "./modules/messages/messages.routes";
+import { usersRoutes } from "./modules/users/users.routes";
 import { jwt } from "./plugins/jwt";
 import { swaggerOptions, swaggerUiOptions } from "./config/swagger-options";
 
@@ -26,6 +29,7 @@ const start = async () => {
     });
     await app.register(fastifyCookie);
     await app.register(jwt);
+    await app.register(socketPlugin);
     await app.register(swagger, { ...swaggerOptions, transform: jsonSchemaTransform });
     await app.register(swaggerUi, swaggerUiOptions);
 
@@ -40,6 +44,8 @@ const start = async () => {
     await app.register(authRoutes, { prefix: "/auth" });
     await app.register(eventsRoutes, { prefix: "/events" });
     await app.register(meRoutes, { prefix: "/me" });
+    await app.register(usersRoutes, { prefix: "/users" });
+    await app.register(messagesRoutes, { prefix: "/messages" });
 
     // // проверяем подключение к БД
     // await db.execute(sql`SELECT 1`);

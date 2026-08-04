@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { DeleteEventsByIdData, DeleteEventsByIdErrors, DeleteEventsByIdJoinData, DeleteEventsByIdJoinErrors, DeleteEventsByIdJoinResponses, DeleteEventsByIdResponses, GetAuthMeData, GetAuthMeErrors, GetAuthMeResponses, GetEventsByIdData, GetEventsByIdErrors, GetEventsByIdResponses, GetEventsData, GetEventsErrors, GetEventsResponses, GetMeData, GetMeErrors, GetMeJoinedData, GetMeJoinedErrors, GetMeJoinedResponses, GetMeResponses, PatchEventsByIdData, PatchEventsByIdErrors, PatchEventsByIdResponses, PostAuthLoginData, PostAuthLoginErrors, PostAuthLoginResponses, PostAuthLogoutData, PostAuthLogoutResponses, PostAuthRefreshData, PostAuthRefreshErrors, PostAuthRefreshResponses, PostAuthRegisterData, PostAuthRegisterErrors, PostAuthRegisterResponses, PostEventsByIdJoinData, PostEventsByIdJoinErrors, PostEventsByIdJoinResponses, PostEventsData, PostEventsErrors, PostEventsResponses } from './types.gen';
+import type { DeleteEventsByIdData, DeleteEventsByIdErrors, DeleteEventsByIdJoinData, DeleteEventsByIdJoinErrors, DeleteEventsByIdJoinResponses, DeleteEventsByIdResponses, GetAuthMeData, GetAuthMeErrors, GetAuthMeResponses, GetEventsByIdData, GetEventsByIdErrors, GetEventsByIdResponses, GetEventsData, GetEventsErrors, GetEventsResponses, GetMeData, GetMeErrors, GetMeJoinedData, GetMeJoinedErrors, GetMeJoinedResponses, GetMeResponses, GetMessagesByIdData, GetMessagesByIdErrors, GetMessagesByIdResponses, GetMessagesConversationsData, GetMessagesConversationsErrors, GetMessagesConversationsResponses, GetUsersData, GetUsersErrors, GetUsersResponses, PatchEventsByIdData, PatchEventsByIdErrors, PatchEventsByIdResponses, PostAuthLoginData, PostAuthLoginErrors, PostAuthLoginResponses, PostAuthLogoutData, PostAuthLogoutResponses, PostAuthRefreshData, PostAuthRefreshErrors, PostAuthRefreshResponses, PostAuthRegisterData, PostAuthRegisterErrors, PostAuthRegisterResponses, PostEventsByIdJoinData, PostEventsByIdJoinErrors, PostEventsByIdJoinResponses, PostEventsData, PostEventsErrors, PostEventsResponses, PostMessagesByIdData, PostMessagesByIdErrors, PostMessagesByIdResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -133,4 +133,44 @@ export const getMe = <ThrowOnError extends boolean = false>(options?: Options<Ge
     security: [{ scheme: 'bearer', type: 'http' }],
     url: '/me/',
     ...options
+});
+
+/**
+ * Get all users except the current user
+ */
+export const getUsers = <ThrowOnError extends boolean = false>(options?: Options<GetUsersData, ThrowOnError>): RequestResult<GetUsersResponses, GetUsersErrors, ThrowOnError> => (options?.client ?? client).get<GetUsersResponses, GetUsersErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/users/',
+    ...options
+});
+
+/**
+ * Get conversation partners ordered by the latest message
+ */
+export const getMessagesConversations = <ThrowOnError extends boolean = false>(options?: Options<GetMessagesConversationsData, ThrowOnError>): RequestResult<GetMessagesConversationsResponses, GetMessagesConversationsErrors, ThrowOnError> => (options?.client ?? client).get<GetMessagesConversationsResponses, GetMessagesConversationsErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/messages/conversations',
+    ...options
+});
+
+/**
+ * Get messages with a conversation partner
+ */
+export const getMessagesById = <ThrowOnError extends boolean = false>(options: Options<GetMessagesByIdData, ThrowOnError>): RequestResult<GetMessagesByIdResponses, GetMessagesByIdErrors, ThrowOnError> => (options.client ?? client).get<GetMessagesByIdResponses, GetMessagesByIdErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/messages/{id}',
+    ...options
+});
+
+/**
+ * Send a new message to a user
+ */
+export const postMessagesById = <ThrowOnError extends boolean = false>(options: Options<PostMessagesByIdData, ThrowOnError>): RequestResult<PostMessagesByIdResponses, PostMessagesByIdErrors, ThrowOnError> => (options.client ?? client).post<PostMessagesByIdResponses, PostMessagesByIdErrors, ThrowOnError>({
+    security: [{ scheme: 'bearer', type: 'http' }],
+    url: '/messages/{id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });

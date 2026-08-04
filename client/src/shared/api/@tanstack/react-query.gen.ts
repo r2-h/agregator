@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { deleteEventsById, deleteEventsByIdJoin, getAuthMe, getEvents, getEventsById, getMe, getMeJoined, type Options, patchEventsById, postAuthLogin, postAuthLogout, postAuthRefresh, postAuthRegister, postEvents, postEventsByIdJoin } from '../sdk.gen';
-import type { DeleteEventsByIdData, DeleteEventsByIdError, DeleteEventsByIdJoinData, DeleteEventsByIdJoinError, GetAuthMeData, GetAuthMeError, GetAuthMeResponse, GetEventsByIdData, GetEventsByIdError, GetEventsByIdResponse, GetEventsData, GetEventsError, GetEventsResponse, GetMeData, GetMeError, GetMeJoinedData, GetMeJoinedError, GetMeJoinedResponse, GetMeResponse, PatchEventsByIdData, PatchEventsByIdError, PatchEventsByIdResponse, PostAuthLoginData, PostAuthLoginError, PostAuthLoginResponse, PostAuthLogoutData, PostAuthRefreshData, PostAuthRefreshError, PostAuthRefreshResponse, PostAuthRegisterData, PostAuthRegisterError, PostAuthRegisterResponse, PostEventsByIdJoinData, PostEventsByIdJoinError, PostEventsByIdJoinResponse, PostEventsData, PostEventsError, PostEventsResponse } from '../types.gen';
+import { deleteEventsById, deleteEventsByIdJoin, getAuthMe, getEvents, getEventsById, getMe, getMeJoined, getMessagesById, getMessagesConversations, getUsers, type Options, patchEventsById, postAuthLogin, postAuthLogout, postAuthRefresh, postAuthRegister, postEvents, postEventsByIdJoin, postMessagesById } from '../sdk.gen';
+import type { DeleteEventsByIdData, DeleteEventsByIdError, DeleteEventsByIdJoinData, DeleteEventsByIdJoinError, GetAuthMeData, GetAuthMeError, GetAuthMeResponse, GetEventsByIdData, GetEventsByIdError, GetEventsByIdResponse, GetEventsData, GetEventsError, GetEventsResponse, GetMeData, GetMeError, GetMeJoinedData, GetMeJoinedError, GetMeJoinedResponse, GetMeResponse, GetMessagesByIdData, GetMessagesByIdError, GetMessagesByIdResponse, GetMessagesConversationsData, GetMessagesConversationsError, GetMessagesConversationsResponse, GetUsersData, GetUsersError, GetUsersResponse, PatchEventsByIdData, PatchEventsByIdError, PatchEventsByIdResponse, PostAuthLoginData, PostAuthLoginError, PostAuthLoginResponse, PostAuthLogoutData, PostAuthRefreshData, PostAuthRefreshError, PostAuthRefreshResponse, PostAuthRegisterData, PostAuthRegisterError, PostAuthRegisterResponse, PostEventsByIdJoinData, PostEventsByIdJoinError, PostEventsByIdJoinResponse, PostEventsData, PostEventsError, PostEventsResponse, PostMessagesByIdData, PostMessagesByIdError, PostMessagesByIdResponse } from '../types.gen';
 
 export const postAuthRegisterMutation = (options?: Partial<Options<PostAuthRegisterData>>): UseMutationOptions<PostAuthRegisterResponse, PostAuthRegisterError, Options<PostAuthRegisterData>> => {
     const mutationOptions: UseMutationOptions<PostAuthRegisterResponse, PostAuthRegisterError, Options<PostAuthRegisterData>> = {
@@ -266,3 +266,74 @@ export const getMeOptions = (options?: Options<GetMeData>) => queryOptions<GetMe
     },
     queryKey: getMeQueryKey(options)
 });
+
+export const getUsersQueryKey = (options?: Options<GetUsersData>) => createQueryKey('getUsers', options);
+
+/**
+ * Get all users except the current user
+ */
+export const getUsersOptions = (options?: Options<GetUsersData>) => queryOptions<GetUsersResponse, GetUsersError, GetUsersResponse, ReturnType<typeof getUsersQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getUsers({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getUsersQueryKey(options)
+});
+
+export const getMessagesConversationsQueryKey = (options?: Options<GetMessagesConversationsData>) => createQueryKey('getMessagesConversations', options);
+
+/**
+ * Get conversation partners ordered by the latest message
+ */
+export const getMessagesConversationsOptions = (options?: Options<GetMessagesConversationsData>) => queryOptions<GetMessagesConversationsResponse, GetMessagesConversationsError, GetMessagesConversationsResponse, ReturnType<typeof getMessagesConversationsQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getMessagesConversations({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getMessagesConversationsQueryKey(options)
+});
+
+export const getMessagesByIdQueryKey = (options: Options<GetMessagesByIdData>) => createQueryKey('getMessagesById', options);
+
+/**
+ * Get messages with a conversation partner
+ */
+export const getMessagesByIdOptions = (options: Options<GetMessagesByIdData>) => queryOptions<GetMessagesByIdResponse, GetMessagesByIdError, GetMessagesByIdResponse, ReturnType<typeof getMessagesByIdQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getMessagesById({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getMessagesByIdQueryKey(options)
+});
+
+/**
+ * Send a new message to a user
+ */
+export const postMessagesByIdMutation = (options?: Partial<Options<PostMessagesByIdData>>): UseMutationOptions<PostMessagesByIdResponse, PostMessagesByIdError, Options<PostMessagesByIdData>> => {
+    const mutationOptions: UseMutationOptions<PostMessagesByIdResponse, PostMessagesByIdError, Options<PostMessagesByIdData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await postMessagesById({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};

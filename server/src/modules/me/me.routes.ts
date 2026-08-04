@@ -1,5 +1,7 @@
 import { FastifyPluginAsyncZod } from "@fastify/type-provider-zod";
+import { desc, eq } from "drizzle-orm";
 import { db } from "../../db";
+import { eventParticipants, events } from "../../db/schema";
 import { joinedResponseSchema } from "./me.schemas";
 import { errorResponses } from "../../utils/zod";
 import { eventsResponseSchema } from "../events/events.schemas";
@@ -18,8 +20,8 @@ export const meRoutes: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const myParticipates = await db.query.eventParticipants.findMany({
-        where: { userId: request.user.sub },
-        orderBy: { joinedAt: "desc" },
+        where: eq(eventParticipants.userId, request.user.sub),
+        orderBy: desc(eventParticipants.joinedAt),
         with: { event: true },
       });
 
@@ -46,9 +48,11 @@ export const meRoutes: FastifyPluginAsyncZod = async (app) => {
       },
     },
     async (request, reply) => {
-      const events = await db.query.events.findMany({ where: { ownerId: request.user.sub } });
+      const myEvents = await db.query.events.findMany({
+        where: eq(events.ownerId, request.user.sub),
+      });
 
-      return reply.code(200).send(events);
+      return reply.code(200).send(myEvents);
     },
   );
 };

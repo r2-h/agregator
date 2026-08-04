@@ -1,5 +1,6 @@
 import { FastifyPluginAsyncZod } from "@fastify/type-provider-zod";
 import argon2 from "argon2";
+import { eq } from "drizzle-orm";
 import { FastifyReply } from "fastify";
 import { env } from "../../config/env";
 import { db } from "../../db";
@@ -30,7 +31,7 @@ export const authRoutes: FastifyPluginAsyncZod = async (app) => {
     async (request, reply) => {
       const { email, name, password } = request.body;
 
-      const existingUser = await db.query.users.findFirst({ where: { email } });
+      const existingUser = await db.query.users.findFirst({ where: eq(users.email, email) });
       if (existingUser) return reply.code(409).send({ message: "Пользователь с таким email уже есть" });
 
       const passwordHash = await argon2.hash(password);
@@ -61,7 +62,7 @@ export const authRoutes: FastifyPluginAsyncZod = async (app) => {
     async (request, reply) => {
       const { email, password } = request.body;
 
-      const user = await db.query.users.findFirst({ where: { email } });
+      const user = await db.query.users.findFirst({ where: eq(users.email, email) });
       if (!user) return reply.code(401).send({ message: "Неверные логин или пароль" });
 
       const valid = await argon2.verify(user.passwordHash, password);
@@ -90,7 +91,7 @@ export const authRoutes: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const userId = request.user.sub;
-      const user = await db.query.users.findFirst({ where: { id: userId } });
+      const user = await db.query.users.findFirst({ where: eq(users.id, userId) });
       if (!user) return reply.code(401).send({ message: "Пользователь не найден" });
 
       return reply.send({
@@ -112,7 +113,7 @@ export const authRoutes: FastifyPluginAsyncZod = async (app) => {
       try {
         const payload = await request.refreshJwtVerify({ onlyCookie: true });
 
-        const user = await db.query.users.findFirst({ where: { id: payload.sub } });
+        const user = await db.query.users.findFirst({ where: eq(users.id, payload.sub) });
         if (!user) return reply.code(401).send({ message: "Пользователь не найден" });
 
         const refreshToken = await reply.refreshJwtSign({ sub: payload.sub });

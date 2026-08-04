@@ -1,8 +1,7 @@
 import { FastifyPluginAsyncZod } from "@fastify/type-provider-zod";
-import { count, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { db } from "../../db";
 import { eventParticipants, events } from "../../db/schema";
-
 import { errorResponses, voidResponseSchema } from "../../utils/zod";
 import {
   createEventSchema,
@@ -68,7 +67,7 @@ export const eventsRoutes: FastifyPluginAsyncZod = async (app) => {
       const events = await db.query.events.findMany({
         with: {
           participants: {
-            where: { userId: request.user.sub },
+            where: eq(eventParticipants.userId, request.user.sub),
             columns: { joinedAt: true },
           },
         },
@@ -100,7 +99,7 @@ export const eventsRoutes: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const event = await db.query.events.findFirst({
-        where: { id: request.params.id },
+        where: eq(events.id, request.params.id),
       });
       if (!event) return reply.code(404).send({ message: "Event not found" });
 
@@ -126,7 +125,7 @@ export const eventsRoutes: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const event = await db.query.events.findFirst({
-        where: { id: request.params.id },
+        where: eq(events.id, request.params.id),
       });
       if (!event) return reply.code(404).send({ message: "Event not found" });
 
@@ -162,7 +161,7 @@ export const eventsRoutes: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const event = await db.query.events.findFirst({
-        where: { id: request.params.id },
+        where: eq(events.id, request.params.id),
       });
       if (!event) return reply.code(404).send({ message: "Событие не найдено" });
 
@@ -191,11 +190,14 @@ export const eventsRoutes: FastifyPluginAsyncZod = async (app) => {
       },
     },
     async (request, reply) => {
-      const event = await db.query.events.findFirst({ where: { id: request.params.id } });
+      const event = await db.query.events.findFirst({ where: eq(events.id, request.params.id) });
       if (!event) return reply.code(404).send({ message: "Событие не найдено" });
 
       const existingParticipation = await db.query.eventParticipants.findFirst({
-        where: { eventId: event.id, userId: request.user.sub },
+        where: and(
+          eq(eventParticipants.eventId, event.id),
+          eq(eventParticipants.userId, request.user.sub),
+        ),
       });
       if (existingParticipation)
         return reply.code(409).send({ message: "Вы уже присоединились к этому событию" });
@@ -241,12 +243,15 @@ export const eventsRoutes: FastifyPluginAsyncZod = async (app) => {
     },
     async (request, reply) => {
       const event = await db.query.events.findFirst({
-        where: { id: request.params.id },
+        where: eq(events.id, request.params.id),
       });
       if (!event) return reply.code(404).send({ message: "Событие не найдено" });
 
       const existingParticipation = await db.query.eventParticipants.findFirst({
-        where: { eventId: event.id, userId: request.user.sub },
+        where: and(
+          eq(eventParticipants.eventId, event.id),
+          eq(eventParticipants.userId, request.user.sub),
+        ),
       });
       if (!existingParticipation) {
         return reply.code(404).send({ message: "Вы не участвуете в этом событии" });

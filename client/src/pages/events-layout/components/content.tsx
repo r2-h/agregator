@@ -1,6 +1,6 @@
 import { SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/shared/ui/sidebar";
 import { Link, useMatchRoute } from "@tanstack/react-router";
-import { PlusIcon, SquaresExclude } from "lucide-react";
+import { MessageCircleMore, PlusIcon, SquaresExclude } from "lucide-react";
 
 export function Content() {
   const matchRoute = useMatchRoute();
@@ -10,6 +10,7 @@ export function Content() {
     all: !!matchRoute({ to: "/events" }),
     my: !!matchRoute({ to: "/events/my" }),
     joined: !!matchRoute({ to: "/events/joined" }),
+    chat: !!matchRoute({ to: "/events/chat" }),
   };
 
   return (
@@ -59,6 +60,18 @@ export function Content() {
               <Link to="/events/joined">
                 <SquaresExclude />
                 <span>Мои участия</span>
+              </Link>
+            }
+          />
+        </SidebarMenuItem>
+        <SidebarMenuItem>
+          <SidebarMenuButton
+            isActive={isActive.chat}
+            tooltip="Чат"
+            render={
+              <Link to="/events/chat">
+                <MessageCircleMore />
+                <span>Чат</span>
               </Link>
             }
           />

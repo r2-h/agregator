@@ -1,5 +1,6 @@
 import { loginRoute } from "@/pages/auth/login/login-route";
 import { registerRoute } from "@/pages/auth/register/register-route";
+import { chatRoute } from "@/pages/events-layout/chat/chat-route";
 import { createNewRoute } from "@/pages/events-layout/create-event/create-event-route";
 import { eventRoute } from "@/pages/events-layout/event/event-route";
 import { eventsLayoutRoute } from "@/pages/events-layout/events-layout-route";
@@ -61,6 +62,7 @@ const routeTree = rootRoute.addChildren([
       eventsRoute,
       eventRoute,
       updateEventRoute,
+      chatRoute,
     ]),
   ]),
 ]);

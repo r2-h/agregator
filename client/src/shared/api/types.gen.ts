@@ -584,10 +584,10 @@ export type PostEventsByIdJoinResponses = {
      * Default Response
      */
     201: {
-        id: unknown;
-        eventId: unknown;
-        userId: unknown;
-        joinedAt: unknown;
+        id: string;
+        eventId: string;
+        userId: string;
+        joinedAt: string;
     };
 };
 
@@ -695,3 +695,175 @@ export type GetMeResponses = {
 };
 
 export type GetMeResponse = GetMeResponses[keyof GetMeResponses];
+
+export type GetUsersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/users/';
+};
+
+export type GetUsersErrors = {
+    /**
+     * Default Response
+     */
+    401: {
+        statusCode?: number;
+        code?: string;
+        error?: string;
+        message: string;
+    };
+};
+
+export type GetUsersError = GetUsersErrors[keyof GetUsersErrors];
+
+export type GetUsersResponses = {
+    /**
+     * Default Response
+     */
+    200: Array<{
+        id: string;
+        email: string;
+        name: string;
+        createdAt: string;
+    }>;
+};
+
+export type GetUsersResponse = GetUsersResponses[keyof GetUsersResponses];
+
+export type GetMessagesConversationsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/messages/conversations';
+};
+
+export type GetMessagesConversationsErrors = {
+    /**
+     * Default Response
+     */
+    401: {
+        statusCode?: number;
+        code?: string;
+        error?: string;
+        message: string;
+    };
+};
+
+export type GetMessagesConversationsError = GetMessagesConversationsErrors[keyof GetMessagesConversationsErrors];
+
+export type GetMessagesConversationsResponses = {
+    /**
+     * Default Response
+     */
+    200: Array<{
+        id: string;
+        email: string;
+        name: string;
+        createdAt: string;
+    }>;
+};
+
+export type GetMessagesConversationsResponse = GetMessagesConversationsResponses[keyof GetMessagesConversationsResponses];
+
+export type GetMessagesByIdData = {
+    body?: never;
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/messages/{id}';
+};
+
+export type GetMessagesByIdErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        statusCode?: number;
+        code?: string;
+        error?: string;
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        statusCode?: number;
+        code?: string;
+        error?: string;
+        message: string;
+    };
+};
+
+export type GetMessagesByIdError = GetMessagesByIdErrors[keyof GetMessagesByIdErrors];
+
+export type GetMessagesByIdResponses = {
+    /**
+     * Default Response
+     */
+    200: Array<{
+        id: string;
+        senderId: string;
+        receiverId: string;
+        text: string | null;
+        image: string | null;
+        video: string | null;
+        createdAt: string;
+        updatedAt: string;
+    }>;
+};
+
+export type GetMessagesByIdResponse = GetMessagesByIdResponses[keyof GetMessagesByIdResponses];
+
+export type PostMessagesByIdData = {
+    body: {
+        text: string;
+    };
+    path: {
+        id: string;
+    };
+    query?: never;
+    url: '/messages/{id}';
+};
+
+export type PostMessagesByIdErrors = {
+    /**
+     * Default Response
+     */
+    400: {
+        statusCode?: number;
+        code?: string;
+        error?: string;
+        message: string;
+    };
+    /**
+     * Default Response
+     */
+    401: {
+        statusCode?: number;
+        code?: string;
+        error?: string;
+        message: string;
+    };
+};
+
+export type PostMessagesByIdError = PostMessagesByIdErrors[keyof PostMessagesByIdErrors];
+
+export type PostMessagesByIdResponses = {
+    /**
+     * Default Response
+     */
+    201: {
+        id: string;
+        senderId: string;
+        receiverId: string;
+        text: string | null;
+        image: string | null;
+        video: string | null;
+        createdAt: string;
+        updatedAt: string;
+    };
+};
+
+export type PostMessagesByIdResponse = PostMessagesByIdResponses[keyof PostMessagesByIdResponses];
