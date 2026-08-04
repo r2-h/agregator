@@ -1,7 +1,6 @@
 import fp from "fastify-plugin";
 import { Server } from "socket.io";
-
-const corsOrigins = ["http://localhost:5173", "http://localhost:4173"];
+import { env } from "../config/env";
 
 // online usersMap = { userId: socketId }
 const userSocketMap = new Map<string, string>();
@@ -15,7 +14,7 @@ declare module "fastify" {
 export const socketPlugin = fp(async (app) => {
   const io = new Server(app.server, {
     cors: {
-      origin: corsOrigins,
+      origin: env.CORS_ORIGINS,
       credentials: true,
     },
   });

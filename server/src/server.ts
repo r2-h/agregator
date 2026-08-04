@@ -22,7 +22,7 @@ app.setSerializerCompiler(serializerCompiler);
 const start = async () => {
   try {
     await app.register(cors, {
-      origin: ["http://localhost:5173", "http://localhost:4173"],
+      origin: env.CORS_ORIGINS,
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       allowedHeaders: ["Content-Type", "Authorization"],
       credentials: true,
