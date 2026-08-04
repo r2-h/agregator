@@ -18,7 +18,8 @@ export function useChatSocket() {
   useEffect(() => {
     if (!userId) return;
 
-    const socket = io(import.meta.env.VITE_API_URL, { query: { userId }, withCredentials: true });
+    const socketUrl = new URL(import.meta.env.VITE_API_URL, window.location.origin).origin;
+    const socket = io(socketUrl, { path: "/socket.io", query: { userId }, withCredentials: true });
 
     socket.on("getOnlineUsers", (onlineUsers: string[]) => chatActions.setOnlineUsers(onlineUsers));
 
