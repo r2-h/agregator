@@ -1,6 +1,6 @@
-import { SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/shared/ui/sidebar";
 import { Link, useMatchRoute } from "@tanstack/react-router";
 import { MessageCircleMore, PlusIcon, SquaresExclude } from "lucide-react";
+import { SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/shared/ui/sidebar";
 
 export function Content() {
   const matchRoute = useMatchRoute();

@@ -1,13 +1,13 @@
+import { useMutation } from "@tanstack/react-query";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { type SubmitEvent } from "react";
+import { authStore } from "@/app/store";
 import { postAuthRegisterMutation } from "@/shared/api/@tanstack/react-query.gen";
 import { Button } from "@/shared/ui/button";
 import { CardTitle } from "@/shared/ui/card";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
-import { useMutation } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { type SubmitEvent } from "react";
 import { AuthLayout } from "../components/AuthLayout";
-import { authStore } from "@/app/store";
 
 export function RegisterPage() {
   const navigate = useNavigate();

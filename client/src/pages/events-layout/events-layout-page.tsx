@@ -1,8 +1,8 @@
-import { Sidebar, SidebarInset, SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar";
 import { Outlet } from "@tanstack/react-router";
-import { Header } from "./components/header";
+import { Sidebar, SidebarInset, SidebarProvider, SidebarTrigger } from "@/shared/ui/sidebar";
 import { Content } from "./components/content";
 import { Footer } from "./components/footer";
+import { Header } from "./components/header";
 
 export function EventsLayoutPage() {
   return (

@@ -6,4 +6,3 @@ export const eventRoute = createRoute({
   path: "$id",
   component: lazyRouteComponent(() => import("./event-page"), "EventPage"),
 });
-

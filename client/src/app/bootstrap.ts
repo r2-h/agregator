@@ -6,7 +6,10 @@ client.setConfig({ baseUrl: import.meta.env.VITE_API_URL });
 
 export async function authRefresh() {
   try {
-    const { data, response } = await postAuthRefresh({ throwOnError: true, credentials: "include" });
+    const { data, response } = await postAuthRefresh({
+      throwOnError: true,
+      credentials: "include",
+    });
     if (!response.ok) {
       authStore.setState({ accessToken: null, user: null });
       throw new Error("postAuthRefresh request not ok");

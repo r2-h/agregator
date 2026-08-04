@@ -1,3 +1,11 @@
+import {
+  createRootRoute,
+  createRoute,
+  createRouter,
+  Link,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
 import { loginRoute } from "@/pages/auth/login/login-route";
 import { registerRoute } from "@/pages/auth/register/register-route";
 import { chatRoute } from "@/pages/events-layout/chat/chat-route";
@@ -9,14 +17,6 @@ import { joinedRoute } from "@/pages/events-layout/joined/joined-route";
 import { myRoute } from "@/pages/events-layout/my/my-route";
 import { updateEventRoute } from "@/pages/events-layout/update-event/update-event-route";
 import { mainRoute } from "@/pages/main/main-route";
-import {
-  createRootRoute,
-  createRoute,
-  createRouter,
-  Link,
-  Outlet,
-  redirect,
-} from "@tanstack/react-router";
 import { authStore } from "./store";
 
 export const rootRoute = createRootRoute({

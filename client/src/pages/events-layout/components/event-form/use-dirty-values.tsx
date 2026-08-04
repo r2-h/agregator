@@ -1,5 +1,5 @@
-import type { PatchEventsByIdData, PostEventsData } from "@/shared/api";
 import { useState } from "react";
+import type { PatchEventsByIdData, PostEventsData } from "@/shared/api";
 
 export type DirtyEventFields = {
   [Key in keyof PostEventsData["body"]]: boolean;

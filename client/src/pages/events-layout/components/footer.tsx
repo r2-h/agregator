@@ -1,3 +1,6 @@
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { LogOutIcon } from "lucide-react";
 import { authStore } from "@/app/store";
 import { postAuthLogoutMutation } from "@/shared/api/@tanstack/react-query.gen";
 import { Avatar, AvatarFallback } from "@/shared/ui/avatar";
@@ -8,9 +11,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/shared/ui/sidebar";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
-import { LogOutIcon } from "lucide-react";
 
 export function Footer() {
   const navigate = useNavigate();

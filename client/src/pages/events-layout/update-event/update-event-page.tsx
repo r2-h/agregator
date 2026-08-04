@@ -1,8 +1,8 @@
-import type { PostEventsData } from "@/shared/api";
-import { getEventsByIdOptions, patchEventsByIdMutation } from "@/shared/api/@tanstack/react-query.gen";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { type SubmitEvent } from "react";
+import type { PostEventsData } from "@/shared/api";
+import { getEventsByIdOptions, patchEventsByIdMutation } from "@/shared/api/@tanstack/react-query.gen";
 import { EventForm } from "../components/event-form/event-form";
 import { updateEventRoute } from "./update-event-route";
 

@@ -1,6 +1,6 @@
+import type { ReactNode } from "react";
 import { Card, CardContent, CardHeader } from "@/shared/ui/card";
 import { cn } from "@/shared/utils/cn";
-import type { ReactNode } from "react";
 
 export function AuthLayout({
   children,

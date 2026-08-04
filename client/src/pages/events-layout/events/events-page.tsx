@@ -1,5 +1,5 @@
-import { getEventsOptions } from "@/shared/api/@tanstack/react-query.gen";
 import { useQuery } from "@tanstack/react-query";
+import { getEventsOptions } from "@/shared/api/@tanstack/react-query.gen";
 import { EventsList } from "../components/events-list";
 
 export function EventsPage() {

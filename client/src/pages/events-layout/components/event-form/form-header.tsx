@@ -1,6 +1,6 @@
-import { Button } from "@/shared/ui/button";
 import { useRouter } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
+import { Button } from "@/shared/ui/button";
 import type { FormType } from "./event-form";
 
 type Props = {

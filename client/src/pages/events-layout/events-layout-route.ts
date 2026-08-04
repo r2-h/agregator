@@ -1,5 +1,5 @@
-import { protectedRoute } from "@/app/router";
 import { createRoute, lazyRouteComponent } from "@tanstack/react-router";
+import { protectedRoute } from "@/app/router";
 
 export const eventsLayoutRoute = createRoute({
   getParentRoute: () => protectedRoute,

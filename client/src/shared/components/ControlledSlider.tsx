@@ -1,5 +1,5 @@
-import type { DirtyEventFields } from "@/pages/events-layout/components/event-form/use-dirty-values";
 import { useState } from "react";
+import type { DirtyEventFields } from "@/pages/events-layout/components/event-form/use-dirty-values";
 import { Slider } from "../ui/slider";
 
 type Props = {

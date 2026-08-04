@@ -1,3 +1,4 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deleteEventsByIdJoinMutation,
   getMeJoinedOptions,
@@ -5,7 +6,6 @@ import {
 } from "@/shared/api/@tanstack/react-query.gen";
 import { Button } from "@/shared/ui/button";
 import { formatDate } from "@/shared/utils/format-date";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export function JoinEvent({ eventId }: { eventId: string }) {
   const queryClient = useQueryClient();

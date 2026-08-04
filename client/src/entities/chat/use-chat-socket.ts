@@ -1,12 +1,12 @@
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { io } from "socket.io-client";
 import { authStore } from "@/app/store";
 import type { GetMessagesByIdResponse } from "@/shared/api";
 import {
   getMessagesByIdQueryKey,
   getMessagesConversationsQueryKey,
 } from "@/shared/api/@tanstack/react-query.gen";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
 import { chatActions, chatStore } from "./store";
 
 type IncomingMessage = GetMessagesByIdResponse[number];

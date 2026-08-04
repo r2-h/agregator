@@ -1,8 +1,8 @@
+import { ArrowLeftIcon, Volume2Icon, VolumeXIcon } from "lucide-react";
 import { chatActions, chatStore } from "@/entities/chat/store";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { Avatar, AvatarFallback } from "@/shared/ui/avatar";
 import { Button } from "@/shared/ui/button";
-import { useIsMobile } from "@/shared/hooks/use-mobile";
-import { ArrowLeftIcon, Volume2Icon, VolumeXIcon } from "lucide-react";
 import { getInitials } from "../helpers";
 
 export function ChatHeader() {

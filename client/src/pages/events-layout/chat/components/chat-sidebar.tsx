@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+import { SearchIcon } from "lucide-react";
 import { chatActions, chatStore } from "@/entities/chat/store";
 import {
   getMessagesConversationsOptions,
@@ -6,8 +8,6 @@ import {
 import { Input } from "@/shared/ui/input";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import { useQuery } from "@tanstack/react-query";
-import { SearchIcon } from "lucide-react";
 import { UserRow } from "./user-row";
 
 export function ChatSidebar() {

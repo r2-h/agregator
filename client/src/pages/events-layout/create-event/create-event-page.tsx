@@ -1,11 +1,11 @@
-import {
-  getEventsQueryKey,
-  getMeQueryKey,
-  postEventsMutation
-} from "@/shared/api/@tanstack/react-query.gen";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "@tanstack/react-router";
 import { type SubmitEvent } from "react";
+import {
+  getEventsQueryKey,
+  getMeQueryKey,
+  postEventsMutation,
+} from "@/shared/api/@tanstack/react-query.gen";
 import { EventForm } from "../components/event-form/event-form";
 
 export function CreateEventPage() {
@@ -29,9 +29,16 @@ export function CreateEventPage() {
       { body },
       {
         onSuccess: (data) => {
-          queryClient.invalidateQueries({ queryKey: getEventsQueryKey() });
-          queryClient.invalidateQueries({ queryKey: getMeQueryKey() });
-          router.navigate({ to: "/events/$id", params: { id: data.id } });
+          queryClient.invalidateQueries({
+            queryKey: getEventsQueryKey(),
+          });
+          queryClient.invalidateQueries({
+            queryKey: getMeQueryKey(),
+          });
+          router.navigate({
+            to: "/events/$id",
+            params: { id: data.id },
+          });
         },
       },
     );

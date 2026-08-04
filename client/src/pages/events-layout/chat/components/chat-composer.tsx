@@ -1,3 +1,6 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { SendIcon } from "lucide-react";
+import type { KeyboardEvent, SubmitEvent } from "react";
 import { chatActions, chatStore } from "@/entities/chat/store";
 import type { GetMessagesByIdResponse } from "@/shared/api";
 import {
@@ -7,9 +10,6 @@ import {
 } from "@/shared/api/@tanstack/react-query.gen";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { SendIcon } from "lucide-react";
-import type { KeyboardEvent, SubmitEvent } from "react";
 
 export function ChatComposer() {
   const queryClient = useQueryClient();

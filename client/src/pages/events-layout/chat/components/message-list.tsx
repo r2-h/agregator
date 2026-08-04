@@ -1,11 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 import { authStore } from "@/app/store";
 import { chatStore } from "@/entities/chat/store";
 import { getMessagesByIdOptions } from "@/shared/api/@tanstack/react-query.gen";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { cn } from "@/shared/utils/cn";
 import { formatDate } from "@/shared/utils/format-date";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
 
 export function MessageList() {
   const activeConversationId = chatStore.useStore((state) => state.activeConversationId);

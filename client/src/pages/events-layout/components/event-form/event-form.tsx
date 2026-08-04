@@ -1,10 +1,10 @@
+import { type SubmitEvent } from "react";
 import type { PatchEventsByIdData, PatchEventsByIdResponse } from "@/shared/api";
 import { ControlledSlider } from "@/shared/components/ControlledSlider";
 import { Card, CardContent } from "@/shared/ui/card";
 import { Field, FieldGroup, FieldLabel } from "@/shared/ui/field";
 import { Input } from "@/shared/ui/input";
 import { Textarea } from "@/shared/ui/textarea";
-import { type SubmitEvent } from "react";
 import { FormFooter } from "./form-footer";
 import { FormHeader } from "./form-header";
 import { useDirtyValues } from "./use-dirty-values";

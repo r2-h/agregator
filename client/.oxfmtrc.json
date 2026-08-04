@@ -1,0 +1,8 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 105,
+  "sortImports": {
+    "newlinesBetween": false
+  },
+  "ignorePatterns": ["src/shared/api/**"]
+}

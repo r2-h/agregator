@@ -1,5 +1,5 @@
-import { rootRoute } from "@/app/router";
 import { createRoute, lazyRouteComponent } from "@tanstack/react-router";
+import { rootRoute } from "@/app/router";
 
 export const mainRoute = createRoute({
   getParentRoute: () => rootRoute,

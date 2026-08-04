@@ -1,9 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { getEventsByIdOptions } from "@/shared/api/@tanstack/react-query.gen";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { formatDate } from "@/shared/utils/format-date";
-import { useQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
 import { Footer } from "./components/footer";
 import { eventRoute } from "./event-route";
 

@@ -1,9 +1,9 @@
+import { Link } from "@tanstack/react-router";
 import { authStore } from "@/app/store";
 import type { GetEventsResponse } from "@/shared/api";
 import { Button } from "@/shared/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/shared/ui/card";
 import { formatDate } from "@/shared/utils/format-date";
-import { Link } from "@tanstack/react-router";
 
 export function EventsCard({ event }: { event: GetEventsResponse[number] }) {
   const isOwner = event.ownerId === authStore.useStore((state) => state.user?.id);

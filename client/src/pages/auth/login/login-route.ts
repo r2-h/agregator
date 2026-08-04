@@ -1,7 +1,7 @@
-import { rootRoute } from "@/app/router";
 import { createRoute, redirect } from "@tanstack/react-router";
-import { LoginPage } from "./LoginPage";
+import { rootRoute } from "@/app/router";
 import { authStore } from "@/app/store";
+import { LoginPage } from "./LoginPage";
 
 export const loginRoute = createRoute({
   getParentRoute: () => rootRoute,

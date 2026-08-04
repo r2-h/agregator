@@ -1,10 +1,10 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { authStore } from "@/app/store";
 import type { GetEventsByIdResponse } from "@/shared/api";
 import { deleteEventsByIdMutation, getEventsOptions } from "@/shared/api/@tanstack/react-query.gen";
 import { Button } from "@/shared/ui/button";
 import { CardFooter } from "@/shared/ui/card";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
 import { JoinEvent } from "./join-event";
 
 type Props = { event: GetEventsByIdResponse };

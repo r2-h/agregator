@@ -1,7 +1,7 @@
+import type { ChatUser } from "@/entities/chat/store";
 import { Avatar, AvatarFallback } from "@/shared/ui/avatar";
 import { cn } from "@/shared/utils/cn";
 import { getInitials } from "../helpers";
-import type { ChatUser } from "@/entities/chat/store";
 
 type Props = {
   user: ChatUser;
